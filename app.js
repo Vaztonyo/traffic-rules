@@ -1,34 +1,40 @@
-
-//find the body tag and store it in a variable called 'body'
+// find the body tag and store it in a variable called 'body'
 var body = document.querySelector("body");
 
 var taxiLocationCounter = 1;
+var previousLocationCounter = 0;
 
 body.onkeydown = function(e){
 
-    //right arrow : 39
-    //left arrow  : 37
-    //up arrow    : 38
-    //down arrow  : 40
+  var tl = new TrafficLight(taxiLocationCounter);
 
-    displayMessage(e.keyCode);
+  if (e.keyCode == 39){
+    if (tl.state() === 'green'){
+      previousLocationCounter = taxiLocationCounter;
+      taxiLocationCounter++;
+      moveTaxi(previousLocationCounter, taxiLocationCounter);
+    }
+}
+else if (e.keyCode == 37){
+  previousLocationCounter = taxiLocationCounter
+  taxiLocationCounter--;
+  moveTaxi(previousLocationCounter, taxiLocationCounter);
+}
+else if (e.keyCode == 38){
+  tl.red();
+}
+else if (e.keyCode == 40){
+  tl.green();
+}
 
-    /*
-
-    to move the taxi forward...
-    when the right arrow is pressed
-    work with `taxiLocationCounter`
-
-    store the value of `taxiLocationCounter` in a variable called `previousLocationCounter`
-    increment the `taxiLocationCounter`
-
-    pass both to the `moveTaxi( previousLocationCounter,
-        taxiLocationCounter)` function
-
-    */
+displayMessage(e.keyCode);
+    // right arrow : 39
+    // left arrow  : 37
+    // up arrow    : 38
+    // down arrow  : 40
 
     // to make the second TrafficLight `Orange`
-    var tl = new TrafficLight(2);
-    tl.orange();
+    // var tl = new TrafficLight(2);
+    // tl.orange();
 
 };
